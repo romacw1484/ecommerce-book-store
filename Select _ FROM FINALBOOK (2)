@@ -1,0 +1,222 @@
+Last login: Mon Dec 18 18:41:27 on ttys000
+williamromac@Williams-Air-6 ~ % ssh wromac@storm.cis.fordham.edu
+
+wromac@storm.cis.fordham.edu's password: 
+Last login: Mon Dec 18 18:41:36 2023 from 47.17.200.170
+[wromac@storm ~]$ mysql -u wromac -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 1174
+Server version: 10.5.23-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use wromac;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [wromac]> show tables;
++------------------------+
+| Tables_in_wromac       |
++------------------------+
+| Address                |
+| Author                 |
+| Book                   |
+| Book_Copies            |
+| Borrows                |
+| Enrolled               |
+| FINAL_Address          |
+| FINAL_Author           |
+| FINAL_Bill             |
+| FINAL_Book             |
+| FINAL_Cart             |
+| FINAL_CartItem         |
+| FINAL_Customer         |
+| FINAL_Inventory        |
+| FINAL_Payments         |
+| FINAL_Publisher        |
+| FINAL_Sections         |
+| FINAL_UsesP            |
+| Final_Address          |
+| Final_Author           |
+| Final_Bank             |
+| Final_Book             |
+| Final_Cart             |
+| Final_CartItem         |
+| Final_Customer         |
+| Final_DebitCredit_Card |
+| Final_Inventory        |
+| Final_Publisher        |
+| Final_Sections         |
+| Holds                  |
+| Librarian              |
+| Member                 |
+| Sections               |
+| Sessions               |
+| Students               |
+| hw5_Departments        |
+| hw5_Employees          |
+| hw5_Projects           |
+| hw5_Works_On           |
++------------------------+
+39 rows in set (0.001 sec)
+
+MariaDB [wromac]> select * from FINAL_Address;
++------------+-----------------------+----------+-------+----------+
+| Address_ID | Street                | City     | State | Zip_Code |
++------------+-----------------------+----------+-------+----------+
+|          1 | 1100 Grand Road       | New York | NY    | 10001    |
+|          2 | 441 East Fordham Road | Bronx    | NY    | 10458    |
+|          3 | 442 Fordham Road      | Bronx    | NY    | 10458    |
+|          4 | 383 56th Street       | New York | NY    | 10002    |
+|          5 | 1 Fordham Road        | Bronx    | NY    | 10458    |
++------------+-----------------------+----------+-------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_Author;
++-----------+--------------------+
+| Author_ID | Author_Name        |
++-----------+--------------------+
+|         1 | Ramez A. Elmasri   |
+|         2 | Shamkant Navathe   |
+|         3 | Ian H. Witten      |
+|         4 | Eibe Frank         |
+|         5 | Mark Hall          |
+|         6 | Matt Florence      |
+|         7 | Raghu Ramakrishnan |
+|         8 | Johannes Gehrke    |
++-----------+--------------------+
+8 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_Bill;
++---------+-------------+---------+------------+--------------+
+| Bill_ID | Customer_ID | Cart_ID | Payment_ID | Total_Amount |
++---------+-------------+---------+------------+--------------+
+|       2 |           1 |       1 |          6 |       370.00 |
+|       3 |           2 |       2 |          2 |       260.00 |
+|       4 |           3 |       3 |          3 |       360.00 |
+|       5 |           4 |       4 |          4 |       390.00 |
++---------+-------------+---------+------------+--------------+
+4 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_Book;
++-------------------+---------------------------------------------------------------------------+-----------+------------+--------------+---------+--------+
+| ISBN              | Title                                                                     | Author_ID | Section_ID | Publisher_ID | Edition | Price  |
++-------------------+---------------------------------------------------------------------------+-----------+------------+--------------+---------+--------+
+| 0-1153-2555-5     | Writing Skills                                                            |         3 |          2 |            1 | 1st     |  30.00 |
+| 0-8053-1755-4     | Fundamentals of Database Systems, 3rd edition                             |         1 |          1 |            1 | 3rd     | 100.00 |
+| 978-0-07-246563-1 | Database Management Systems, 3rd edition                                  |         4 |          1 |            3 | 3rd     | 110.00 |
+| 978-0-12-374856-0 | Data Mining, Practical Machine Learning Tools and Techniques, 3rd edition |         2 |          1 |            2 | 3rd     | 120.00 |
++-------------------+---------------------------------------------------------------------------+-----------+------------+--------------+---------+--------+
+4 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_Cart;
++---------+-------------+------------+------------------+
+| Cart_ID | Customer_ID | Payment_ID | Date_Of_Purchase |
++---------+-------------+------------+------------------+
+|       1 |           1 |          6 | 2017-11-24       |
+|       2 |           2 |          2 | 2017-11-23       |
+|       3 |           3 |          3 | 2017-12-01       |
+|       4 |           4 |          4 | 2017-11-24       |
++---------+-------------+------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_CartItem;
++-------------+---------+-------------------+----------+
+| CartItem_ID | Cart_ID | ISBN              | Quantity |
++-------------+---------+-------------------+----------+
+|           1 |       1 | 978-0-12-374856-0 |        1 |
+|           2 |       1 | 978-0-07-246563-1 |        2 |
+|           3 |       1 | 0-1153-2555-5     |        1 |
+|           4 |       2 | 978-0-12-374856-0 |        1 |
+|           5 |       2 | 978-0-07-246563-1 |        1 |
+|           6 |       2 | 0-1153-2555-5     |        1 |
+|           7 |       3 | 978-0-12-374856-0 |        1 |
+|           8 |       3 | 978-0-07-246563-1 |        1 |
+|           9 |       3 | 0-1153-2555-5     |        1 |
+|          10 |       3 | 0-8053-1755-4     |        1 |
+|          11 |       4 | 978-0-12-374856-0 |        1 |
+|          12 |       4 | 978-0-07-246563-1 |        1 |
+|          13 |       4 | 0-1153-2555-5     |        2 |
+|          14 |       4 | 0-8053-1755-4     |        1 |
++-------------+---------+-------------------+----------+
+14 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_Customer;
++-------------+-------------+--------+------------+------------------------+---------------+------------+----------+----------+
+| Customer_ID | Full_Name   | Gender | DOP        | Email                  | Phone_Number  | Address_ID | Username | Password |
++-------------+-------------+--------+------------+------------------------+---------------+------------+----------+----------+
+|           1 | Tom Hunks   | Male   | 1990-12-01 | thunks@yahoo.com       | 212-400-0001  |          1 | xxyy     | 0808     |
+|           2 | Tom Cruise  | Male   | 1991-10-01 | tcruise@yahoo.com      | 718-817-3333  |          2 | xzzz     | 11223    |
+|           3 | Tina Fei    | Female | 1956-12-01 | tfei11@yahoo.com       | 817-718-0001  |          3 | abcde    | xyz123   |
+|           4 | Rice Brown  | Female | 1970-12-01 | rbrown1999@hotmail.com | 212-0001-7788 |          4 | iama     | 34ii     |
+|           5 | Lisa Warren | Female | 1972-12-01 | lisawarren@gmail.com   | 212-300-1199  |          5 | lisaw    | 8877     |
++-------------+-------------+--------+------------+------------------------+---------------+------------+----------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_Inventory;
++-------------------+------------------+
+| ISBN              | Current_Quantity |
++-------------------+------------------+
+| 0-8053-1755-4     |               20 |
+| 978-0-12-374856-0 |               25 |
+| 0-1153-2555-5     |               10 |
+| 978-0-07-246563-1 |               15 |
++-------------------+------------------+
+4 rows in set (0.001 sec)
+
+MariaDB [wromac]> select * from FINAL_Payments;
++------------+--------------+-------------+------------------+------------+---------------+----------------------------------------+----------------+----------------+--------------+-------------+
+| Payment_ID | Payment_Type | Card_Holder | Card_Number      | Exp_Date   | Phone_Number  | Billing_Address                        | Account_Holder | Account_Number | Account_Type | Bank_Name   |
++------------+--------------+-------------+------------------+------------+---------------+----------------------------------------+----------------+----------------+--------------+-------------+
+|          1 | DebitCredit  | Tom Hunks   | 9999999988888888 | 2017-08-01 | 212-400-0001  | 1100 Grand Road, New York, NY 10001    | NULL           | NULL           | NULL         | NULL        |
+|          2 | DebitCredit  | Tom Cruise  | 2222444455556666 | 2014-12-01 | 718-817-3333  | 441 East Fordham Road, Bronx, NY 10458 | NULL           | NULL           | NULL         | NULL        |
+|          3 | DebitCredit  | Tina Fei    | 1234123456785678 | 2018-10-01 | 817-718-0001  | 442 Fordham Road, Bronx, NY 10458      | NULL           | NULL           | NULL         | NULL        |
+|          4 | DebitCredit  | Rice Brown  | 1122334455667788 | 2016-01-01 | 212-0001-7788 | 383 56th Street, New York, NY 10002    | NULL           | NULL           | NULL         | NULL        |
+|          5 | DebitCredit  | Lisa Warren | 1111222233334444 | 2017-01-01 | 212-300-1199  | 1 Fordham Road, Bronx, NY 10458        | NULL           | NULL           | NULL         | NULL        |
+|          6 | Bank         | NULL        | NULL             | NULL       | NULL          | NULL                                   | Tom Hunks      | 1112223        | Checking     | Chase       |
+|          7 | Bank         | NULL        | NULL             | NULL       | NULL          | NULL                                   | Tina Fei       | 12667          | Checking     | Capital One |
+|          8 | Bank         | NULL        | NULL             | NULL       | NULL          | NULL                                   | Lisa Warren    | 9922882        | Checking     | Chase       |
++------------+--------------+-------------+------------------+------------+---------------+----------------------------------------+----------------+----------------+--------------+-------------+
+8 rows in set (0.001 sec)
+
+MariaDB [wromac]> select * from FINAL_Publisher;
++--------------+----------------+
+| Publisher_ID | Publisher_Name |
++--------------+----------------+
+|            1 | Addison Wesley |
+|            2 | Elsevier       |
+|            3 | McGraw-Hill    |
++--------------+----------------+
+3 rows in set (0.000 sec)
+
+MariaDB [wromac]> select * from FINAL_Section;
+ERROR 1146 (42S02): Table 'wromac.FINAL_Section' doesn't exist
+MariaDB [wromac]> select * from FINAL_Sections;
++------------+--------------+
+| Section_ID | Section_Name |
++------------+--------------+
+|          1 | Sciences     |
+|          2 | Arts         |
++------------+--------------+
+2 rows in set (0.001 sec)
+
+MariaDB [wromac]> select * from FINAL_UsesP;
++-------------+------------+
+| Customer_ID | Payment_ID |
++-------------+------------+
+|           1 |          1 |
+|           1 |          6 |
+|           2 |          2 |
+|           3 |          3 |
+|           3 |          7 |
+|           4 |          4 |
+|           5 |          5 |
+|           5 |          8 |
++-------------+------------+
+8 rows in set (0.000 sec)
+
+MariaDB [wromac]> 
