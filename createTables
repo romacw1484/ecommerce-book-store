@@ -1,0 +1,118 @@
+-- FINAL_Address Table    (adress table to hold users address) 
+CREATE TABLE FINAL_Address (
+    Address_ID INT PRIMARY KEY,
+    Street VARCHAR(255),
+    City VARCHAR(100),
+    State CHAR(2),
+    Zip_Code VARCHAR(10)
+);
+
+-- FINAL_Author Table   (Author table to hold books authors) 
+CREATE TABLE FINAL_Author (
+    Author_ID INT PRIMARY KEY,
+    Author_Name VARCHAR(255)
+);
+
+-- FINAL_Bill Table   (table to generate everything in final) 
+CREATE TABLE FINAL_Bill (
+    Bill_ID INT PRIMARY KEY,
+    Customer_ID INT,
+    Cart_ID INT,
+    Payment_ID INT,
+    Total_Amount DECIMAL(10, 2),
+    FOREIGN KEY (Customer_ID) REFERENCES FINAL_Customer(Customer_ID),
+    FOREIGN KEY (Cart_ID) REFERENCES FINAL_Cart(Cart_ID),
+    FOREIGN KEY (Payment_ID) REFERENCES FINAL_Payments(Payment_ID)
+);
+
+-- FINAL_Book Table     (book table holds all info pertaining to a book)
+CREATE TABLE FINAL_Book (
+    ISBN VARCHAR(20) PRIMARY KEY,
+    Title VARCHAR(255),
+    Author_ID INT,
+    Section_ID INT,
+    Publisher_ID INT,
+    Edition VARCHAR(20),
+    Price DECIMAL(10, 2),
+    FOREIGN KEY (Author_ID) REFERENCES FINAL_Author(Author_ID),
+    FOREIGN KEY (Section_ID) REFERENCES FINAL_Sections(Section_ID),
+    FOREIGN KEY (Publisher_ID) REFERENCES FINAL_Publisher(Publisher_ID)
+);
+
+-- FINAL_Cart Table  (cart shows purchase) 
+CREATE TABLE FINAL_Cart (
+    Cart_ID INT PRIMARY KEY,
+    Customer_ID INT,
+    Payment_ID INT,
+    Date_Of_Purchase DATE,
+    FOREIGN KEY (Customer_ID) REFERENCES FINAL_Customer(Customer_ID),
+    FOREIGN KEY (Payment_ID) REFERENCES FINAL_Payments(Payment_ID)
+);
+
+-- FINAL_CartItem Table
+CREATE TABLE FINAL_CartItem (
+    CartItem_ID INT PRIMARY KEY,
+    Cart_ID INT,
+    ISBN VARCHAR(20),
+    Quantity INT,
+    FOREIGN KEY (Cart_ID) REFERENCES FINAL_Cart(Cart_ID),
+    FOREIGN KEY (ISBN) REFERENCES FINAL_Book(ISBN)
+);
+
+-- FINAL_Customer Table
+CREATE TABLE FINAL_Customer (
+    Customer_ID INT PRIMARY KEY,
+    Full_Name VARCHAR(255),
+    Gender VARCHAR(10),
+    DOP DATE,
+    Email VARCHAR(255),
+    Phone_Number VARCHAR(20),
+    Address_ID INT,
+    Username VARCHAR(50),
+    Password VARCHAR(50),
+    FOREIGN KEY (Address_ID) REFERENCES FINAL_Address(Address_ID)
+);
+
+-- FINAL_Inventory Table
+CREATE TABLE FINAL_Inventory (
+    ISBN VARCHAR(20),
+    Current_Quantity INT,
+    PRIMARY KEY (ISBN),
+    FOREIGN KEY (ISBN) REFERENCES FINAL_Book(ISBN)
+);
+
+-- FINAL_Payments Table
+CREATE TABLE FINAL_Payments (
+    Payment_ID INT PRIMARY KEY,
+    Payment_Type VARCHAR(20),
+    Card_Holder VARCHAR(255),
+    Card_Number VARCHAR(20),
+    Exp_Date DATE,
+    Phone_Number VARCHAR(20),
+    Billing_Address VARCHAR(255),
+    Account_Holder VARCHAR(255),
+    Account_Number VARCHAR(20),
+    Account_Type VARCHAR(20),
+    Bank_Name VARCHAR(100)
+);
+
+-- FINAL_Publisher Table
+CREATE TABLE FINAL_Publisher (
+    Publisher_ID INT PRIMARY KEY,
+    Publisher_Name VARCHAR(100)
+);
+
+-- FINAL_Sections Table
+CREATE TABLE FINAL_Sections (
+    Section_ID INT PRIMARY KEY,
+    Section_Name VARCHAR(100)
+);
+
+-- FINAL_UsesP Table
+CREATE TABLE FINAL_UsesP (
+    Customer_ID INT,
+    Payment_ID INT,
+    PRIMARY KEY (Customer_ID, Payment_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES FINAL_Customer(Customer_ID),
+    FOREIGN KEY (Payment_ID) REFERENCES FINAL_Payments(Payment_ID)
+);
